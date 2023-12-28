@@ -35,29 +35,38 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http
-            .csrf(AbstractHttpConfigurer::disable)
-            .exceptionHandling(configurer -> configurer
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            )
-            .sessionManagement(configurer -> configurer
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .headers(configurer -> configurer
-                .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
-            )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(requests -> requests
-                .requestMatchers(
-                    "/",
-                    "/auth/**",
-                    "/public/**",
-                    "/assets/**",
-                    "/api-docs/**",
-                    "/swagger-ui/**",
-                    "/webjars/**"
-                ).permitAll()
-                .requestMatchers("/admin/**").hasAuthority(Constants.RoleEnum.ADMIN.name())
-                .anyRequest().authenticated()
+              // Disable CSRF (Cross-Site Request Forgery) protection
+              .csrf(AbstractHttpConfigurer::disable)
+              // Configure exception handling to use JwtAuthenticationEntryPoint
+              .exceptionHandling(configurer -> configurer
+                  .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+              )
+              // Configure session management to be stateless (no session)
+              .sessionManagement(configurer -> configurer
+                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+              )
+              // Configure headers, disable frame options to enable displaying in frames
+              .headers(configurer -> configurer
+                  .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+              )
+              // Add JwtAuthenticationFilter before the default UsernamePasswordAuthenticationFilter
+              .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+              // Authorize HTTP requests based on their paths
+              .authorizeHttpRequests(requests -> requests
+                  // Permit access to specific paths without authentication
+                  .requestMatchers(
+                      "/",
+                      "/auth/**",
+                      "/public/**",
+                      "/assets/**",
+                      "/api-docs/**",
+                      "/swagger-ui/**",
+                      "/webjars/**"
+                  ).permitAll()
+                  // Require ADMIN authority for paths starting with "/admin/"
+                  .requestMatchers("/admin/**").hasAuthority(Constants.RoleEnum.ADMIN.name())
+                  // Authenticate any other requests
+                  .anyRequest().authenticated()
             )
             .build();
     }

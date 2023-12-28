@@ -46,6 +46,12 @@ import java.util.stream.Collectors;
 
 import static com.mewebstudio.javaspringbootboilerplate.util.Constants.SECURITY_SCHEME_NAME;
 
+
+/**
+ * Controller for handling user-related administrative actions. It offers endpoints for creating, retrieving,
+ * updating, and deleting users. This controller primarily serves admin panel functionalities.
+*/
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/users")
@@ -58,6 +64,10 @@ public class UserController extends AbstractBaseController {
 
     private final MessageSourceService messageSourceService;
 
+
+
+    // @Operation and @ApiResponse annotations to document the purpose of the endpoint, 
+    // the expected request and response formats, and possible HTTP response statuses.
     @GetMapping
     @Operation(
         summary = "Users list endpoint",
@@ -81,7 +91,7 @@ public class UserController extends AbstractBaseController {
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Full authentication is required to access this resource",
+                description = "Full authentication is /get required to access this resource",
                 content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ErrorResponse.class)
@@ -168,7 +178,7 @@ public class UserController extends AbstractBaseController {
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Full authentication is required to access this resource",
+                description = "Full authentication ispost required to access this resource",
                 content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ErrorResponse.class)
@@ -218,7 +228,7 @@ public class UserController extends AbstractBaseController {
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Full authentication is required to access this resource",
+                description = "Full authentication is get{id} required to access this resource",
                 content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ErrorResponse.class)
@@ -264,7 +274,7 @@ public class UserController extends AbstractBaseController {
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Full authentication is required to access this resource",
+                description = "Full authentication is patch{id} required to access this resource",
                 content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ErrorResponse.class)
@@ -309,7 +319,7 @@ public class UserController extends AbstractBaseController {
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Full authentication is required to access this resource",
+                description = "Full authentication is del{id} required to access this resource",
                 content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ErrorResponse.class)

@@ -24,6 +24,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         this.interceptorService = interceptorService;
     }
 
+
+    //  Adds view controllers to the application. 
+    //  Here, it's used to redirect the root URL ("/") to the Swagger UI page, making the API documentation the default page.
     @Override
     public final void addViewControllers(final ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", swaggerUiPath);
@@ -40,6 +43,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     /**
      * Add Spring MVC lifecycle interceptors for pre- and post-processing of controller method invocations
      * and resource handler requests.
+     * Adds custom interceptors for pre- and post-processing of controller method invocations. 
+     * In this case, the interceptorService is added as an interceptor for paths that match /v1/**. 
+     * This means the interceptor will be invoked for any request to a path that starts with /v1/
      *
      * @param registry -- List of mapped interceptors.
      */

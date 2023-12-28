@@ -34,9 +34,11 @@ import static com.mewebstudio.javaspringbootboilerplate.util.Constants.SECURITY_
 
 @Configuration
 public class AppConfig {
+    
     /**
-     * Locale resolver bean.
-     *
+     * This function creates a LocaleResolver bean. It sets the default locale and timezone for the application. 
+     * The default locale is obtained from the app.default-locale configuration property, 
+     * and the default timezone is obtained from app.default-timezone configuration property.
      * @param defaultLocale String
      * @return LocaleResolver
      */
@@ -51,8 +53,8 @@ public class AppConfig {
     }
 
     /**
-     * Model resolver bean.
-     *
+     * This function creates a ModelResolver bean for Swagger (OpenAPI) documentation. 
+     * It configures the ObjectMapper used by Swagger for JSON serialization and deserialization to use lower camel case for property names.
      * @param objectMapper ObjectMapper
      * @return ModelResolver
      */
@@ -62,8 +64,8 @@ public class AppConfig {
     }
 
     /**
-     * Password encoder.
-     *
+     *  This function creates a PasswordEncoder bean that uses BCryptPasswordEncoder. 
+     * This is useful for password encoding in security contexts, such as for user authentication.
      * @return PasswordEncoder
      */
     @Bean
@@ -72,7 +74,9 @@ public class AppConfig {
     }
 
     /**
-     * OpenAPI bean.
+     * This function creates an OpenAPI bean. 
+     * It sets up the OpenAPI documentation with custom information like the application's name, description, version, 
+     * terms of service URL, and license. It also configures the security scheme used for API authentication and authorization.
      *
      * @param title       String
      * @param description String
@@ -96,7 +100,8 @@ public class AppConfig {
     }
 
     /**
-     * Simple application event multicaster bean.
+     * This function creates an ApplicationEventMulticaster bean.
+     * It allows for asynchronous handling of application events using SimpleAsyncTaskExecutor
      *
      * @return ApplicationEventMulticaster
      */
@@ -109,7 +114,8 @@ public class AppConfig {
     }
 
     /**
-     * Spring template engine bean.
+     *This function creates a SpringTemplateEngine bean for processing templates, particularly HTML templates. 
+     * It configures the template engine with a template resolver for resolving templates
      *
      * @return SpringTemplateEngine
      */
@@ -122,7 +128,8 @@ public class AppConfig {
     }
 
     /**
-     * Spring resource template resolver bean.
+     *This function creates a SpringResourceTemplateResolver bean.
+     *It sets up the template resolver with properties like prefix, suffix, template mode, and character encoding for resolving HTML templates
      *
      * @return SpringResourceTemplateResolver
      */
@@ -138,7 +145,9 @@ public class AppConfig {
     }
 
     /**
-     * Object mapper bean.
+     * This function creates an ObjectMapper bean. It configures Jackson's ObjectMapper for JSON processing.
+     * This includes settings like failing on unknown properties, using lower camel case for property names, 
+     * registering the JavaTimeModule for date-time types, and setting the serialization inclusion policy
      *
      * @return ObjectMapper
      */

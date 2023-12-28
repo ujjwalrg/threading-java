@@ -32,6 +32,11 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Global exception handler for the application, intercepting exceptions across the entire application
+ * and providing custom responses. Ensures consistent error handling behavior for various types of exceptions.
+ */
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -43,6 +48,7 @@ public class AppExceptionHandler {
     public final ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupported(
         final HttpRequestMethodNotSupportedException e) {
         log.error(e.toString(), e.getMessage());
+        // System.out.println("Inside HTTPRequestMethodNotSupported --- " + e.getMessage());
         return build(HttpStatus.METHOD_NOT_ALLOWED, messageSourceService.get("method_not_supported"));
     }
 
@@ -107,6 +113,7 @@ public class AppExceptionHandler {
     })
     public final ResponseEntity<ErrorResponse> handleBadCredentialsException(final Exception e) {
         log.error(e.toString(), e.getMessage());
+        // System.out.println(e.getMessage());
         return build(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
