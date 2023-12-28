@@ -7,10 +7,10 @@
 
     <changeSet author="merin (generated)" id="1691158233874-3">
         <createTable tableName="password_reset_tokens">
-            <column name="id" type="BIGINT" defaultValue="128">
+            <column name="id" type="BIGINT" autoIncrement="true" >
                 <constraints nullable="false" primaryKey="true" primaryKeyName="password_reset_tokensPK"/>
             </column>
-            <column name="user_id" type="BIGINT" defaultValue="127">
+            <column name="user_id" type="BIGINT" >
                 <constraints nullable="false"/>
             </column>
             <column name="token" type="VARCHAR(32)">

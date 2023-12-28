@@ -12,7 +12,7 @@
 
     <changeSet author="merin (generated)" id="1689816475235-1">
         <createTable tableName="email_verification_tokens">
-            <column name="id" type="BIGINT" defaultValue="123">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="email_verification_tokensPK"/>
             </column>
             <column name="user_id" type="BIGINT">
@@ -35,7 +35,7 @@
 
     <changeSet author="merin (generated)" id="1689816475235-2">
         <createTable tableName="roles">
-            <column name="id" type="BIGINT" defaultValue="124">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="rolesPK"/>
             </column>
             <column name="name" type="VARCHAR(16)">
@@ -52,7 +52,7 @@
 
     <changeSet author="merin (generated)" id="1689816475235-3">
         <createTable tableName="settings">
-            <column name="id" type="BIGINT" defaultValue="125">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="settingsPK"/>
             </column>
             <column name="key" type="VARCHAR(255)">
@@ -81,7 +81,7 @@
 
     <changeSet author="merin (generated)" id="1689816475235-5">
         <createTable tableName="users">
-            <column name="id" type="BIGINT" defaultValue="126">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK"/>
             </column>
             <column name="email" type="VARCHAR(255)">
