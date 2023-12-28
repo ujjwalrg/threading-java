@@ -36,15 +36,15 @@ spring:
       ddl-auto: ${DB_DDL_AUTO:none}
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: false
         format_sql: true
         globally_quoted_identifiers: true
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://${POSTGRESQL_HOST:localhost}:${POSTGRESQL_PORT:5432}/${POSTGRESQL_DB:app_db}
-    username: ${POSTGRESQL_USER:postgres}
-    password: ${POSTGRESQL_PASSWORD:secret}
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:threadingdb}?useUnicode=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:urgautam}
   data:
     redis:
       database: ${REDIS_DATABASE:0}

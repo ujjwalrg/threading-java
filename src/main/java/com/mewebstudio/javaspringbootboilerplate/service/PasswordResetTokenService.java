@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
 import static com.mewebstudio.javaspringbootboilerplate.util.Constants.PASSWORD_RESET_TOKEN_LENGTH;
 
@@ -114,7 +114,8 @@ public class PasswordResetTokenService {
      *
      * @param userId UUID
      */
-    public void deleteByUserId(UUID userId) {
+    // public void deleteByUserId(UUID userId) {
+    public void deleteByUserId(Long userId) {
         passwordResetTokenRepository.deleteByUserId(userId);
     }
 }

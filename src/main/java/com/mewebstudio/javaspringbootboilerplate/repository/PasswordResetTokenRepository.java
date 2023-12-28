@@ -7,14 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
-public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, UUID> {
-    Optional<PasswordResetToken> findByUserId(UUID userId);
+// public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, UUID> {
+public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {
+    // Optional<PasswordResetToken> findByUserId(UUID userId);
+    Optional<PasswordResetToken> findByUserId(Long userId);
 
     Optional<PasswordResetToken> findByToken(String token);
 
     @Modifying
     @Query("DELETE FROM PasswordResetToken rt WHERE rt.user.id = :userId")
-    void deleteByUserId(@Param("userId") UUID userId);
+    // void deleteByUserId(@Param("userId") UUID userId);
+    void deleteByUserId(@Param("userId") Long userId);
 }

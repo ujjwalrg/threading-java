@@ -17,9 +17,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+// import java.util.UUID;
 
 import static com.mewebstudio.javaspringbootboilerplate.util.Constants.TOKEN_HEADER;
+// import static com.mewebstudio.jlerplate.util.Constants.TOKEN_HEADER;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +65,8 @@ public class AuthService {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             JwtUserDetails jwtUserDetails = jwtTokenProvider.getPrincipal(authentication);
 
-            return generateTokens(UUID.fromString(jwtUserDetails.getId()), rememberMe);
+            // return generateTokens(UUID.fromString(jwtUserDetails.getId()), rememberMe);
+            return generateTokens(Long.parseUnsignedLong(jwtUserDetails.getId()), rememberMe);
         } catch (NotFoundException e) {
             log.error("Authentication failed for email: {}", email);
             throw new AuthenticationCredentialsNotFoundException(badCredentialsMessage);
@@ -154,7 +156,7 @@ public class AuthService {
      * @param rememberMe Boolean option to set the expiration time for refresh token
      * @return an object of TokenResponse
      */
-    private TokenResponse generateTokens(final UUID id, final Boolean rememberMe) {
+    private TokenResponse generateTokens(final Long id, final Boolean rememberMe) {
         String token = jwtTokenProvider.generateJwt(id.toString());
         String refreshToken = jwtTokenProvider.generateRefresh(id.toString());
         if (rememberMe) {

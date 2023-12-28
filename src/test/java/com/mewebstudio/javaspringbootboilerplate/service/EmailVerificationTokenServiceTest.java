@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +50,7 @@ class EmailVerificationTokenServiceTest {
         token.setUser(user);
 
         lenient().when(emailVerificationTokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-        lenient().when(emailVerificationTokenRepository.findByUserId(any(UUID.class))).thenReturn(Optional.of(token));
+        lenient().when(emailVerificationTokenRepository.findByUserId(any(Long.class))).thenReturn(Optional.of(token));
         lenient().when(emailVerificationTokenRepository.save(any(EmailVerificationToken.class))).thenReturn(token);
         lenient().when(messageSourceService.get(anyString())).thenReturn("Error Message");
 
@@ -108,7 +108,7 @@ class EmailVerificationTokenServiceTest {
         @DisplayName("Test create email verification token")
         void givenUser_whenCreate_thenOldTokenNotPresentAndTokenCreated() {
             // Given
-            when(emailVerificationTokenRepository.findByUserId(any(UUID.class))).thenReturn(Optional.empty());
+            when(emailVerificationTokenRepository.findByUserId(any(Long.class))).thenReturn(Optional.empty());
             when(emailVerificationTokenRepository.save(any(EmailVerificationToken.class))).thenReturn(token);
             // When
             EmailVerificationToken createdToken = emailVerificationTokenService.create(user);
@@ -170,7 +170,7 @@ class EmailVerificationTokenServiceTest {
     @DisplayName("Test deleteByUserId")
     void givenUserId_whenDeleteByUserId_thenTokenDeleted() {
         // Given
-        doNothing().when(emailVerificationTokenRepository).deleteByUserId(any(UUID.class));
+        doNothing().when(emailVerificationTokenRepository).deleteByUserId(any(Long.class));
         // When
         emailVerificationTokenService.deleteByUserId(user.getId());
         // Then

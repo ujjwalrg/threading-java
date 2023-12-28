@@ -12,15 +12,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
+// import java.util.UUID;
 
 @Getter
 @Setter
 @MappedSuperclass
 public class AbstractBaseEntity implements Serializable {
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.UUID)
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

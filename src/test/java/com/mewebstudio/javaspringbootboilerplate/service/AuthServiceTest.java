@@ -23,8 +23,9 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import java.util.Random;
 
-import java.util.UUID;
+// import java.util.UUID;
 
 import static com.mewebstudio.javaspringbootboilerplate.util.Constants.TOKEN_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -280,7 +281,10 @@ class AuthServiceTest {
         @DisplayName("Test for authentication credentials not found exception")
         void given_whenLogoutWithBearerToken_thenThrowAuthenticationCredentialsNotFoundException() {
             // Given
-            jwtToken.setUserId(UUID.randomUUID());
+            // jwtToken.setUserId(UUID.randomUUID());
+            Long userId = new Random().nextLong(10000);
+            // jwtToken.setUserId((new Random().nextInt(10000));
+            jwtToken.setUserId(userId);
             when(jwtTokenProvider.extractJwtFromBearerString(bearerToken)).thenReturn(token);
             when(jwtTokenService.findByTokenOrRefreshToken(token)).thenReturn(jwtToken);
             // When

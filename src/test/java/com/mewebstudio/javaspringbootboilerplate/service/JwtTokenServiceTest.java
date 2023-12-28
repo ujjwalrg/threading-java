@@ -15,7 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,7 +48,9 @@ class JwtTokenServiceTest {
         @DisplayName("Happy path")
         void given_whenFindByUserIdAndRefreshToken_thenAssertBody() {
             // Given
-            UUID userId = UUID.randomUUID();
+            // UUID userId = UUID.randomUUID();
+            Long userId = new Random(10000).nextLong();
+            // Long userId = 1L;
             String refreshToken = "testRefreshToken";
             when(jwtTokenRepository.findByUserIdAndRefreshToken(userId, refreshToken))
                 .thenReturn(Optional.of(jwtToken));
@@ -63,7 +66,8 @@ class JwtTokenServiceTest {
         @DisplayName("Not found exception")
         void given_whenFindByUserIdAndRefreshToken_thenThrowNotFoundException() {
             // Given
-            UUID userId = UUID.randomUUID();
+            // UUID userId = UUID.randomUUID();
+            Long userId = new Random(10000).nextLong();
             String refreshToken = "testRefreshToken";
             when(jwtTokenRepository.findByUserIdAndRefreshToken(userId, refreshToken)).thenReturn(Optional.empty());
             when(messageSourceService.get("not_found_with_param",

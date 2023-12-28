@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +50,7 @@ class PasswordResetTokenServiceTest {
         token.setUser(user);
 
         lenient().when(passwordResetTokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-        lenient().when(passwordResetTokenRepository.findByUserId(any(UUID.class))).thenReturn(Optional.of(token));
+        lenient().when(passwordResetTokenRepository.findByUserId(any(Long.class))).thenReturn(Optional.of(token));
         lenient().when(passwordResetTokenRepository.save(any(PasswordResetToken.class))).thenReturn(token);
         lenient().when(messageSourceService.get(anyString())).thenReturn("Error Message");
 
@@ -108,7 +108,7 @@ class PasswordResetTokenServiceTest {
         @DisplayName("Test create password reset token")
         void givenUser_whenCreate_thenOldTokenNotPresentAndTokenCreated() {
             // Given
-            when(passwordResetTokenRepository.findByUserId(any(UUID.class))).thenReturn(Optional.empty());
+            when(passwordResetTokenRepository.findByUserId(any(Long.class))).thenReturn(Optional.empty());
             when(passwordResetTokenRepository.save(any(PasswordResetToken.class))).thenReturn(token);
             // When
             PasswordResetToken createdToken = passwordResetTokenService.create(user);
@@ -199,7 +199,7 @@ class PasswordResetTokenServiceTest {
     @DisplayName("Test deleteByUserId")
     void givenUserId_whenDeleteByUserId_thenTokenDeleted() {
         // Given
-        doNothing().when(passwordResetTokenRepository).deleteByUserId(any(UUID.class));
+        doNothing().when(passwordResetTokenRepository).deleteByUserId(any(Long.class));
         // When
         passwordResetTokenService.deleteByUserId(user.getId());
         // Then

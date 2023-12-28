@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+// import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,8 @@ public class JwtTokenService {
      * @param refreshToken String
      * @return JwtToken
      */
-    public JwtToken findByUserIdAndRefreshToken(UUID id, String refreshToken) {
+    // public JwtToken findByUserIdAndRefreshToken(UUID id, String refreshToken) {
+    public JwtToken findByUserIdAndRefreshToken(Long id, String refreshToken) {
         return jwtTokenRepository.findByUserIdAndRefreshToken(id, refreshToken)
             .orElseThrow(() -> new NotFoundException(messageSourceService.get("not_found_with_param",
                 new String[]{messageSourceService.get("token")})));

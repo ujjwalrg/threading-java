@@ -39,7 +39,7 @@ import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+// import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -117,7 +117,8 @@ public class UserService {
      * @param id UUID
      * @return User
      */
-    public User findById(UUID id) {
+    // public User findById(UUID id) {
+    public User findById(Long id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new NotFoundException(messageSourceService.get("not_found_with_param",
                 new String[]{messageSourceService.get("user")})));
@@ -130,7 +131,8 @@ public class UserService {
      * @return User
      */
     public User findById(String id) {
-        return findById(UUID.fromString(id));
+        // return findById(UUID.fromString(id));
+        return findById(Long.parseUnsignedLong(id));
     }
 
     /**
@@ -167,7 +169,8 @@ public class UserService {
      * @return UserDetails
      */
     public UserDetails loadUserById(final String id) {
-        User user = userRepository.findById(UUID.fromString(id))
+        // User user = userRepository.findById(UUID.fromString(id))
+        User user = userRepository.findById(Long.parseUnsignedLong(id))
             .orElseThrow(() -> new NotFoundException(messageSourceService.get("not_found_with_param",
                 new String[]{messageSourceService.get("user")})));
 
@@ -239,7 +242,8 @@ public class UserService {
      * @param request UpdateUserRequest
      * @return User
      */
-    public User update(UUID id, UpdateUserRequest request) throws BindException {
+    // public User update(UUID id, UpdateUserRequest request) throws BindException {
+    public User update(Long id, UpdateUserRequest request) throws BindException {
         User user = findById(id);
         user.setEmail(request.getEmail());
         user.setName(request.getName());
@@ -274,7 +278,8 @@ public class UserService {
      * @return User
      */
     public User update(String id, UpdateUserRequest request) throws BindException {
-        return update(UUID.fromString(id), request);
+        // return update(UUID.fromString(id), request);
+        return update(Long.parseUnsignedLong(id), request);
     }
 
     /**

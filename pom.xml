@@ -57,17 +57,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-docker-compose</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.26</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -231,10 +226,10 @@
                     <diffChangeLogFile>
                         ${project.basedir}/src/main/resources/db/changelog/migrations/${maven.build.timestamp}_changelog.xml
                     </diffChangeLogFile>
-                    <url>jdbc:postgresql://localhost:5432/app_db</url>
-                    <username>postgres</username>
-                    <password>secret</password>
-                    <referenceUrl>hibernate:spring:com.mewebstudio.javaspringbootboilerplate?dialect=org.hibernate.dialect.PostgreSQLDialect&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+                   <url>jdbc:mysql://localhost:3306/threadingdb</url>
+                    <username>root</username>
+                    <password>urgautam</password>
+                    <referenceUrl>hibernate:spring:com.mewebstudio.javaspringbootboilerplate?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                 </configuration>
             </plugin>
@@ -248,4 +243,22 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <dependencies>
+                <dependency>
+                
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-docker-compose</artifactId>
+                    <scope>runtime</scope>
+                    <optional>true</optional>
+        
+                </dependency>
+                <!-- Other Docker-related dependencies -->
+            </dependencies>
+            <!-- Other Docker-related configuration -->
+        </profile>
+    </profiles>
 </project>

@@ -7,14 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
-public interface EmailVerificationTokenRepository extends JpaRepository<EmailVerificationToken, UUID> {
-    Optional<EmailVerificationToken> findByUserId(UUID userId);
+// public interface EmailVerificationTokenRepository extends JpaRepository<EmailVerificationToken, UUID> {
+public interface EmailVerificationTokenRepository extends JpaRepository<EmailVerificationToken, Long> {
+    // Optional<EmailVerificationToken> findByUserId(UUID userId);
+    Optional<EmailVerificationToken> findByUserId(Long userId);
 
     Optional<EmailVerificationToken> findByToken(String token);
 
     @Modifying
     @Query("DELETE FROM EmailVerificationToken rt WHERE rt.user.id = :userId")
-    void deleteByUserId(@Param("userId") UUID userId);
+    // void deleteByUserId(@Param("userId") UUID userId);
+    void deleteByUserId(@Param("userId") Long userId);
 }

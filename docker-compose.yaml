@@ -1,17 +1,18 @@
 services:
-  postgres:
-    image: postgres:13.11-bullseye
-    container_name: java-spring-boot-boilerplate-postgres
+  mysql:
+    image: mysql:8.0.27
+    container_name: java-spring-boot-boilerplate-mysql
     restart: always
     environment:
-      POSTGRES_DB: app_db
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: postgres
+      MYSQL_DATABASE: threadingdb
+      MYSQL_ROOT_PASSWORD: urgautam
+      MYSQL_USER: root
+      MYSQL_PASSWORD: urgautam
     ports:
-      - '5432:5432'
+      - '3306:3306'
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./var/logs/postgresql:/var/log/postgresql
+      - mysql-data:/var/lib/mysql
+      - ./var/logs/mysql:/var/log/mysql
     networks:
       - java-spring-boot-boilerplate-network
   redis:
@@ -51,7 +52,7 @@ services:
       - java-spring-boot-boilerplate-network
 
 volumes:
-  postgres-data:
+  mysql-data:
   redis-data:
 
 networks:

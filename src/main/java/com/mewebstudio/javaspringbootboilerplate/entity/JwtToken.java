@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
-import java.util.UUID;
+// import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Builder
@@ -18,12 +18,18 @@ import java.util.concurrent.TimeUnit;
 @Setter
 @RedisHash(value = "jwtTokens")
 public class JwtToken {
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.UUID)
+    // private UUID id;
+
+    // @Indexed
+    // private UUID userId;
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Indexed
-    private UUID userId;
+    private Long userId;
 
     @Indexed
     private String token;

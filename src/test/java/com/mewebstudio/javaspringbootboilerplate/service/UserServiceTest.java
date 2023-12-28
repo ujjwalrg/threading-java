@@ -44,7 +44,7 @@ import org.springframework.validation.BindException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+// import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -109,7 +109,8 @@ class UserServiceTest {
         @DisplayName("Happy path")
         void given_whenGetUser_thenAssertBody() {
             // Given
-            when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            when(userRepository.findById(Long.parseUnsignedLong(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
             // When
             User result = userService.getUser();
             // Then
@@ -132,7 +133,8 @@ class UserServiceTest {
         @DisplayName("When user not found")
         void given_whenGetUserNotFound_thenShouldThrowBadCredentialsException() {
             // Given
-            when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.empty());
+            // when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.empty());
+            when(userRepository.findById(Long.parseUnsignedLong(jwtUserDetails.getId()))).thenReturn(Optional.empty());
             // When
             Executable executable = () -> userService.getUser();
             // Then
@@ -189,7 +191,8 @@ class UserServiceTest {
         @DisplayName("Happy path")
         void given_whenFindById_thenAssertBody() {
             // Given
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             // When
             User result = userService.findById(user.getId());
             // Then
@@ -281,7 +284,8 @@ class UserServiceTest {
         @DisplayName("Happy path")
         void given_whenLoadUserById_thenAssertBody() {
             // Given
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             // When
             UserDetails userDetails = userService.loadUserById(user.getId().toString());
             // Then
@@ -393,7 +397,8 @@ class UserServiceTest {
             request.setIsEmailVerified(true);
             user.setEmail("oldEmail");
             request.setEmail("newEmail");
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             when(userRepository.save(any(User.class))).thenReturn(user);
             // When
             User result = userService.update(user.getId().toString(), request);
@@ -410,7 +415,8 @@ class UserServiceTest {
             request.setEmail("newEmail");
             request.setName("newName");
             request.setLastName("newLastName");
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             when(userRepository.save(any(User.class))).thenReturn(user);
             // When
             User result = userService.update(user.getId().toString(), request);
@@ -430,7 +436,8 @@ class UserServiceTest {
             request.setOldPassword("OldP@ssw0rd123.");
             request.setPassword("P@ssw0rd123.");
             request.setPasswordConfirm("P@ssw0rd123.");
-            when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            when(userRepository.findById(Long.parseUnsignedLong(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
             when(passwordEncoder.matches(any(String.class), any(String.class))).thenReturn(true);
             when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
             when(userRepository.save(any(User.class))).thenReturn(user);
@@ -448,7 +455,8 @@ class UserServiceTest {
             request.setOldPassword("OldP@ssw0rd123.");
             request.setPassword("NewP@ssw0rd123.");
             when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
-            when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(UUID.fromString(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
+            when(userRepository.findById(Long.parseUnsignedLong(jwtUserDetails.getId()))).thenReturn(Optional.of(user));
             // When
             Executable executable = () -> userService.updatePassword(Instancio.create(UpdatePasswordRequest.class));
             // Then
@@ -468,7 +476,8 @@ class UserServiceTest {
             when(passwordResetTokenService.getUserByToken(any(String.class))).thenReturn(user);
             when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
             when(userRepository.save(any(User.class))).thenReturn(user);
-            doNothing().when(passwordResetTokenService).deleteByUserId(any(UUID.class));
+            // doNothing().when(passwordResetTokenService).deleteByUserId(any(UUID.class));
+            doNothing().when(passwordResetTokenService).deleteByUserId(any(Long.class));
             // When
             String token = "token";
             userService.resetPassword(token, request);
@@ -485,7 +494,8 @@ class UserServiceTest {
         void given_whenResendEmailVerificationMail_thenAssertBody() {
             // Given
             user.setEmailVerifiedAt(null);
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             doNothing().when(eventPublisher).publishEvent(any(UserEmailVerificationSendEvent.class));
             // When
             userService.resendEmailVerificationMail();
@@ -498,7 +508,8 @@ class UserServiceTest {
         @DisplayName("Not authenticated test")
         void given_whenResendEmailVerificationMail_thenAssertBadCredentialsException() {
             // Given
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.empty());
             // When
             Executable executable = () -> userService.resendEmailVerificationMail();
             // Then
@@ -509,7 +520,8 @@ class UserServiceTest {
         @DisplayName("E-mail already verified test")
         void given_whenResendEmailVerificationMail_thenAssertBadRequestException() {
             // Given
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             // When
             Executable executable = () -> userService.resendEmailVerificationMail();
             // Then
@@ -603,7 +615,8 @@ class UserServiceTest {
         @DisplayName("Happy path")
         void given_whenDelete_thenAssertBody() {
             // Given
-            when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            // when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
+            when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
             // When
             userService.delete(user.getId().toString());
             // Then
