@@ -1,0 +1,60 @@
+services:
+  mysql:
+    image: mysql:8.0.27
+    container_name: java-spring-boot-boilerplate-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: threadingdb
+      MYSQL_ROOT_PASSWORD: urgautam
+      MYSQL_USER: root
+      MYSQL_PASSWORD: urgautam
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./var/logs/mysql:/var/log/mysql
+    networks:
+      - java-spring-boot-boilerplate-network
+  redis:
+    image: redis:7.0.12-alpine
+    container_name: java-spring-boot-boilerplate-redis
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass "secret"
+    volumes:
+      - redis-data:/data
+    ports:
+      - '6379:6379'
+    networks:
+      - java-spring-boot-boilerplate-network
+  redis-commander:
+    image: rediscommander/redis-commander:redis-commander-210
+    restart: always
+    container_name: java-spring-boot-boilerplate-redis-commander
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: default
+      REDIS_PASSWORD: secret
+      HTTP_USER: admin
+      HTTP_PASSWORD: secret
+    ports:
+      - '6380:8081'
+    networks:
+      - java-spring-boot-boilerplate-network
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: java-spring-boot-boilerplate-mailhog
+    restart: always
+    ports:
+      - '8025:8025'
+      - '1025:1025'
+    networks:
+      - java-spring-boot-boilerplate-network
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  java-spring-boot-boilerplate-network:
+    driver: bridge

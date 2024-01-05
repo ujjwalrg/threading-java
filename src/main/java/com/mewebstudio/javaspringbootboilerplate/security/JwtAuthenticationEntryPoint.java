@@ -22,6 +22,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final MessageSourceService messageSourceService;
+
     private final ObjectMapper objectMapper;
 
     /**
@@ -34,6 +35,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
      * @param e           AuthenticationException representing the authentication failure
      * @throws IOException if an input or output exception occurs
      */
+
     @Override
     public final void commence(final HttpServletRequest request,
                                final HttpServletResponse response,

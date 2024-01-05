@@ -32,12 +32,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addRedirectViewController("/", swaggerUiPath);
     }
 
+    // @Override
+    // public final void addCorsMappings(final CorsRegistry registry) {
+    //     registry.addMapping("/**")
+    //         .allowedOrigins("*")
+    //         .exposedHeaders("*")
+    //         .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE");
+    // }
+
     @Override
-    public final void addCorsMappings(final CorsRegistry registry) {
+    public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
             .allowedOrigins("*")
-            .exposedHeaders("*")
-            .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE");
+            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .exposedHeaders("Authorization", "Content-Type");
+            // .allowCredentials(true);
     }
 
     /**
